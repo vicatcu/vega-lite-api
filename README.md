@@ -46,6 +46,20 @@ For a basic setup allowing you to build the API and run tests:
 - Run `yarn` to install dependencies for all packages. If you don't have yarn installed, see https://yarnpkg.com/en/docs/install.
 - Once installation is complete, run `yarn build` to build the API generator and generate API source code in the `src` directory. Run `yarn test` to additionally run the test suite.
 
+## Using output with [vega-lite](https://github.com/vega/vega-lite) compiler
+There might come a time when you want to convert your vega-lite spec into a standard vega spec, which you would do with the compile method of vega-lite. Here's an example of doing that.
+```js
+const vl = require('vega-lite-api');
+const vegaLite = require('vega-lite');
+const spec = vl.markBar().data('data/movies.json').encode(
+  vl.x().fieldQ('IMDB_Rating').bin(true),
+  vl.y().count()
+);
+vegaLite.compile(spec.toJSON());
+// Note: vegaLite.compile(spec) fails
+// Note: vegaLite.compile(spec.toString()) also fails
+```
+
 ## API Reference
 
 ### Chart Constructors
